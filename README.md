@@ -41,7 +41,7 @@ NodeJS Step 12 news site
 ---
 ## :blue_book: 페이지 콘셉
 ### 홈페이지 : URL = '/', method = GET
-![homePage](./readme-img/newspage-home.png)
+![homePage](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-home.png)
 
 1. 화면 상단에 바를 만들어 페이지이름과 아이콘을 표시한다. (스크롤을 아래로 내리더라도 상단바와 테마는 사라지지 않는다.)
 2. 상단 바의 오른쪽에는 비로그인 시에는 로그인 버튼이, 로그인 시에는 유저 닉네임을 표시한다.
@@ -52,7 +52,7 @@ NodeJS Step 12 news site
     - 오른쪽에는 위, 아래로 나눠 위에는 조회수가 많은 뉴스들을 표시하고, 아래에는 구독한 기자가 올린 뉴스들을 표시한다.
 
 ### 로그인/회원가입 페이지 : URL = '/sign', method = GET
-![signPage](./readme-img/newspage-sign.png)
+![signPage](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-sign.png)
 
 1. 그림과는 달리 홈페이지에서 로그인 버튼 클릭시 로그인 창만 중앙에 출력할 예정.
 2. 그리고 SIGN UP 버튼을 누르면 화면전환 없이 로그인창이 사라지고 회원가입창이 나오도록 구현할 예정.
@@ -61,8 +61,8 @@ NodeJS Step 12 news site
 - 회원가입 : URL = '/createaccount', method = POST
 
 ### 기사 페이지 : URL = '/article?writer=circus&title=juggling', method = GET
-![article1](./readme-img/newspage-article1.png)
-![article1](./readme-img/newspage-article2.png)
+![article1](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-article1.png)
+![article1](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-article2.png)
 
 1. 그림에는 넣지 못했지만, 화면 최상단에 홈페이지에 있던 상단바와 테마를 표시할 예정(스크롤을 내리더라도 사라지지 않음)
 2. 상단에 기사 제목표시, 그 아래 본문 표시
@@ -77,7 +77,7 @@ NodeJS Step 12 news site
 - 댓글 등록 : 요청 URL = '/comment', method = POST (화면전환 없음)
 
 ### 회원정보 페이지 : URL = '/userinfo', method = POST
-![userInfo](./readme-img/newspage-userpage.png)
+![userInfo](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-userpage.png)
 
 1. 회원정보 표시
 2. 기자요청 : 요청 URL = '/please', method = GET (화면전환 없음)
@@ -85,7 +85,7 @@ NodeJS Step 12 news site
 4. 회원탈퇴 : URL = '/withdraw', method = GET (홈페이지로 이동)
 
 ### 기사작성 페이지 : URL = '/writingPage', method = GET
-![writingPage](./readme-img/newspage-writingpage.png)
+![writingPage](https://github.com/jeuk817/nodejs-news/blob/circus/readme-img/newspage-writingpage.png)
 
 1. 기사를 작성할 수 있는 페이지 홈페이지에 노출될 제목과 본문을 적을 수 있다.
 2. 이미지삽입은 공부해봐야 어떻게 될지 알것 같다.

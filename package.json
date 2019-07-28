@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-news",
+  "version": "1.0.0",
+  "description": "new site - node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeuk817/nodejs-news.git"
+  },
+  "keywords": [
+    "newsSite",
+    "nodejs",
+    "express",
+    "mongoDB",
+    "mongoose",
+    "jwt",
+    "oauth"
+  ],
+  "author": "circus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeuk817/nodejs-news/issues"
+  },
+  "homepage": "https://github.com/jeuk817/nodejs-news#readme"
+}

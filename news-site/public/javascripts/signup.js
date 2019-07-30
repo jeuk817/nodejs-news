@@ -6,16 +6,20 @@ const inputNewPwd = document.getElementById('inputNewPwd');
 const confirmPassword = document.getElementById('confirmPassword');
 const notePwd = document.getElementById('notePwd');
 
+// 계정생성버튼 클릭 시 ID와 패스워드가 유효성검사를 모두 통과했는지 확인하고, 통과했다면 계정을 생성하는 이벤트
 createID.addEventListener('click', async (event) => {
     if (inputID.dataset.possible !== "yes" || inputNewPwd.dataset.possible !== 'yes') return alert('ID와 password가 유효한지 확인해주세요.')
     const id = inputID.value;
     const pwd = inputNewPwd.value;
+    alert('계정이 생성되었습니다.');
     const response = await fetch('/users/signUp', {
         method: 'POST',
         body: JSON.stringify({ id, pwd }),
         headers: { "Content-Type": "application/json" }
     })
-    alert('계정이 생성되었습니다.')
+    if (response.redirected) {
+        window.location.href = response.url;
+    }
 })
 
 // ID를 입력했을 때, 정규식을 이용해 입력된 아이디가 유효한지 검사하여 표시하는 이벤트
@@ -87,42 +91,3 @@ confirmPassword.addEventListener('keyup', (event) => {
     inputNewPwd.dataset.possible = 'yes';
     notePwd.innerHTML = '비밀번호 일치';
 })
-
-/*
-clickCreateID() {
-    this.createID.addEventListener('click', async (e) => {
-        const passwordToUse = document.getElementById('passwordToUse').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (this.ischeckedID()) {
-            if (passwordToUse.length < 8) {
-                const text = '비밀번호는 최소 8자리 이상 입력해주세요';
-                this.showNote(text, 1500);
-            } else {
-                if (passwordToUse !== confirmPassword) {
-                    const text = '비밀번호가 일치하지 않습니다.';
-                    this.showNote(text, 1500);
-                } else {
-                    const idAndPwd = 'id=' + this.userNameToUse.value + '&pwd=' + passwordToUse;
-                    const response = await fetch('/createID', {
-                        method: 'POST',
-                        body: idAndPwd
-                    })
-                    const data = await response.text();
-                    if (data === 'create') {
-                        this.changeLoginWindow();
-                        const text = '아이디가 생성되었습니다.';
-                        this.showNote(text, 1500);
-                    } else {
-                        const text = '실패';
-                        this.showNote(text, 1500);
-                    }
-                }
-            }
-        } else {
-            const text = '아이디 중복체크를 해주세요.';
-            this.showNote(text, 1500);
-        }
-    })
-}
-*/

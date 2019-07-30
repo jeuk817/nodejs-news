@@ -16,6 +16,7 @@ router.post('/signUp', (req, res, next) => {
   test.save((err, account) => {
     if (err) return console.error(err);
   })
+  res.redirect('/login');
 })
 
 router.post('/identification', async (req, res, next) => {

@@ -4,12 +4,7 @@ class DB {
     connect() {
         mongoose.connect('mongodb://localhost', {
             dbName: 'test',
-        }, (error) => {
-            if (error) {
-                console.log('몽고디비 연결 에러', error)
-            } else {
-                console.log('몽고디비 연결 성공')
-            }
+            useNewUrlParser: true
         })
 
         var db = mongoose.connection;

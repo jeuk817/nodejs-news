@@ -7,7 +7,7 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.status(403).send('로그인 필요');
+        res.render('homepage');
     }
 };
 
@@ -21,18 +21,16 @@ exports.isNotLoggedIn = (req, res, next) => {
     }
 }
 
+// jwt토큰을 통해 로그인 되었는지 확인하는 함수.
+// 쿠키에 토큰이 저장되어있는지 확인후 없으면 홈페이지로, 있으면 req.userInfo에 담아서 next를 한다.
 exports.verifyToken = async (req, res, next) => {
     try {
         const token = req.cookies.token;
-        console.log(token, 'ttttttttttttttttttttttttt')
         if (!token) {
-            return res.status(403).json({
-                success: false,
-                message: 'not logged in'
-            })
+            return res.render('homepage');
         }
         const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-        console.log(decodedToken, 'decodeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+        req.userInfo = decodedToken;
         return next();
     } catch (err) {
         if (err.name === 'TokenExpiredError') {

@@ -5,12 +5,8 @@ var router = express.Router();
 
 // 홈페이지
 // 로그인상태가 아니면 homepage.pug를 render하고, 로그인상태면 loginedhome.pug를 출력합니다.
-router.get('/', verifyToken, (req, res, next) => {
-  console.log(req.user, 'ddddddddddddddddddddddddddd')
-  if (req.isAuthenticated()) return next();
-  res.render('homepage');
-}, (req, res, next) => {
-  res.render('loginedhome', { user: req.user });
+router.get('/', isLoggedIn, verifyToken, (req, res, next) => {
+  res.render('loginedhome', { user: req.userInfo });
 });
 
 // 로그인페이지

@@ -41,6 +41,7 @@ router.post('/identification', isNotLoggedIn, async (req, res, next) => {
 // 로그인버튼 클릭 시 실행되는 함수
 // app.js: passportConfig(passport) -> passport/index.js: local(passport) -> passport/localStrategy.js: passport.use -> 여기
 // passport.use에서 로그인 성공/실패에 따라 다른 매개변수가 passport.authenticate의 두번째 콜백함수에 넘어옵니다.
+// 로그인 성공시 req.login을 통해 passport를 쿠키에 저장하고, jwt.sign을 통해 토큰을 만들어 res.cookie를 통해저장한다.
 // 실패시 로그인페이지에 redirect 성공시 홈으로 redirect
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
@@ -63,7 +64,6 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
           expiresIn: '10m',
           issuer: 'circus'
         });
-      console.log(token, 'login');
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: 15 * 60000,

@@ -1,11 +1,12 @@
 var express = require('express');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, verifyToken } = require('./middlewares');
 
 var router = express.Router();
 
 // 홈페이지
 // 로그인상태가 아니면 homepage.pug를 render하고, 로그인상태면 loginedhome.pug를 출력합니다.
-router.get('/', (req, res, next) => {
+router.get('/', verifyToken, (req, res, next) => {
+  console.log(req.user, 'ddddddddddddddddddddddddddd')
   if (req.isAuthenticated()) return next();
   res.render('homepage');
 }, (req, res, next) => {

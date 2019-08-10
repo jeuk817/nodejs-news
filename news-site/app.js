@@ -8,6 +8,7 @@ var flash = require('connect-flash');
 const passport = require('passport');
 const passportConfig = require('./passport/index');
 const connect = require('./schemas/index');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const jwt = require('jsonwebtoken');
 
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const UserCollection = require('../schemas/user');
 
 router.get('/', function (req, res, next) {
@@ -50,11 +51,24 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     if (!user) {
       return res.redirect('/loginPage');
     }
-    return req.login(user, (loginError) => {
+    req.login(user, (loginError) => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
+      const token = jwt.sign({
+        id: user.id,
+        _id: user._id
+      }, process.env.JWT_SECRET, {
+          expiresIn: '10m',
+          issuer: 'circus'
+        });
+      console.log(token, 'login');
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 15 * 60000,
+      })
+
       return res.redirect('/')
     });
   })(req, res, next);

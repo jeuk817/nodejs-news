@@ -84,4 +84,14 @@ router.get('/logout', isLoggedIn, (req, res) => {
   res.redirect('/');
 });
 
+router.get('/google',
+  passport.authenticate('google', {
+    scope: ['profile']
+  })
+);
+
+router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
+  res.send('reached')
+})
+
 module.exports = router;

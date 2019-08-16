@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+<<<<<<< HEAD
 const user = new Schema({
     id: {
         type: String,
@@ -20,3 +21,11 @@ const user = new Schema({
 })
 
 module.exports = mongoose.model('user', user, 'Users');
+=======
+const testSchema = new Schema({
+    id: String,
+    pwd: String,
+})
+
+module.exports = mongoose.model('test', testSchema);
+>>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)

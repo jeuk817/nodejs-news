@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require('dotenv').config();
 
 const createError = require('http-errors'),
@@ -20,6 +21,25 @@ const indexRouter = require('./routes/index'),
   userRouter = require('./routes/user'),
   textRouter = require('./routes/text');
 
+=======
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var session = require('express-session');
+var flash = require('connect-flash');
+const passport = require('passport');
+const passportConfig = require('./passport/index');
+const connect = require('./schemas/index');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+var app = express();
+connect();
+passportConfig(passport);
+>>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -43,9 +63,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
+<<<<<<< HEAD
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/text', textRouter);
+=======
+app.use('/users', usersRouter);
+>>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)
 
 app.use(function (req, res, next) {
   next(createError(404));

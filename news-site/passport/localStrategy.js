@@ -10,7 +10,10 @@ module.exports = passport => {
         usernameField: 'inputID',
         passwordField: 'inputPwd',
     }, async (inputID, inputPwd, done) => {
+<<<<<<< HEAD
         console.log('localstratgy')
+=======
+>>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)
         try {
             const exUser = await UserCollection.findOne({ id: inputID });
             if (exUser) {

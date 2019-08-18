@@ -12,7 +12,7 @@ createID.addEventListener('click', async (event) => {
     const id = inputID.value;
     const pwd = inputNewPwd.value;
     alert('계정이 생성되었습니다.');
-    const response = await fetch('/users/signUp', {
+    const response = await fetch('/auth/signUp', {
         method: 'POST',
         body: JSON.stringify({ id, pwd }),
         headers: { "Content-Type": "application/json" }
@@ -44,7 +44,7 @@ identification.addEventListener('click', async (event) => {
     if (inputID.dataset.possible !== "yet") return;
     const idToCheck = inputID.value;
     try {
-        const response = await fetch('/users/identification', {
+        const response = await fetch('/auth/identification', {
             method: 'POST',
             body: JSON.stringify({ id: idToCheck }),
             headers: { "Content-Type": "application/json" }

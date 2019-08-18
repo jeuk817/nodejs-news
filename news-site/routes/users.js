@@ -38,47 +38,9 @@ router.post('/identification', isNotLoggedIn, async (req, res, next) => {
   }
 })
 
-// 로그인버튼 클릭 시 실행되는 함수
-// app.js: passportConfig(passport) -> passport/index.js: local(passport) -> passport/localStrategy.js: passport.use -> 여기
-// passport.use에서 로그인 성공/실패에 따라 다른 매개변수가 passport.authenticate의 두번째 콜백함수에 넘어옵니다.
-// 로그인 성공시 req.login을 통해 passport를 쿠키에 저장하고, jwt.sign을 통해 토큰을 만들어 res.cookie를 통해저장한다.
-// 실패시 로그인페이지에 redirect 성공시 홈으로 redirect
-/*
-router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
-    console.log('passport.authenticate')
-    if (authError) {
-      console.error(authError);
-      return next(authError);
-    }
-    if (!user) {
-      return res.redirect('/loginPage');
-    }
-    req.login(user, (loginError) => {
-      if (loginError) {
-        console.error(loginError);
-        return next(loginError);
-      }
-      const token = jwt.sign({
-        id: user.id,
-        _id: user._id
-      }, process.env.JWT_SECRET, {
-          expiresIn: '10m',
-          issuer: 'circus'
-        });
-      res.cookie('token', token, {
-        httpOnly: true,
-        maxAge: 15 * 60000,
-      })
-
-      return res.redirect('/')
-    });
-  })(req, res, next);
-});
-*/
-
+// 로컬로그인시 실행 라우터: DB에서 ID와 pwd를 체크하여 정확히 입력했다면 jwt를 생성하여 쿠키에 저장하고 홈페이지로 redirect합니다.
+// 로그인 실패시 상황에 맞추어 메시지를 flash에 담아서 로그인페이지로 redirect합니다.(메시지는 로그인 버튼 아래 표시됩니다.)
 router.post('/login', isNotLoggedIn, async (req, res, next) => {
-  console.log('로컬로그인')
   const { inputID, inputPwd } = req.body;
   try {
     const exUser = await UserCollection.findOne({ id: inputID });
@@ -86,7 +48,6 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
       const result = inputPwd === exUser.pwd;
       if (result) {
         // 로그인 성공시 토큰 생성
-        console.log('로컬로그인 성공')
         const token = jwt.sign({
           id: exUser.id,
           _id: exUser._id,
@@ -102,12 +63,12 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
 
         return res.redirect('/')
       } else {
-        console.log('로컬로그인 비밀번호 불일치')
-        // 비밀번호 불일치
+        req.flash('note', '비밀번호를 정확히 입력해 주세요.')
+        return res.redirect('/loginPage');
       }
     } else {
-      console.log('로컬로그인 없는 아이디')
-      // 없는 아이디
+      req.flash('note', 'ID를 정확히 입력해 주세요.')
+      return res.redirect('/loginPage');
     }
   } catch (err) {
     console.log(err);

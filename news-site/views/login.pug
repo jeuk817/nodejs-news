@@ -7,7 +7,7 @@ block content
         input(type="password" name="inputPwd" id="inputPwd" placeholder="비밀번호")
         p(id="notePwd")
         input(type="submit" id="loginBtn" value="로그인")
-        p(id="noteLogin")
+        p(id="noteLogin") #{note}
         a(id='signUpBtn' href='http://localhost:3000/signup' role='button')
             div 회원가입
     form(action='/users/google', method='get')

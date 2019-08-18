@@ -7,12 +7,15 @@ module.exports = (passport) => {
     // req.login이 passport.serializeUser를 호출합니다. req.login에서 로그인한 사용자정보 user객체가 넘어옵니다.
     // done함수의 두 번째 인자로 넘긴 user.id가 세션에 저장됩니다.
     passport.serializeUser((user, done) => {
+        console.log('serializeUser')
+        // done(null, '1234');
         done(null, user.id);
     });
 
     // passport.deserializeUser 메서드는 app.js에서 passport.session()미들웨어가 매 요청시 호출합니다.
     // serializeUser가 세션에 저장했던 id를 받아 db를 조회하여 유저정보를 req.user에 저장합니다.
     passport.deserializeUser((id, done) => {
+        console.log('deserializeUser')
         UserCollection.findOne({ id })
             .then(user => done(null, user))
             .catch(err => done(err));

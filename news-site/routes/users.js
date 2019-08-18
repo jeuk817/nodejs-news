@@ -45,6 +45,7 @@ router.post('/identification', isNotLoggedIn, async (req, res, next) => {
 // 실패시 로그인페이지에 redirect 성공시 홈으로 redirect
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
+    console.log('passport.authenticate')
     if (authError) {
       console.error(authError);
       return next(authError);
@@ -84,6 +85,8 @@ router.get('/logout', isLoggedIn, (req, res) => {
   res.redirect('/');
 });
 
+// 구글 로그인 시 실행
+// 유저의 프로파일을 가지고 passport/googleStrategy.js의 passport.use로 이동
 router.get('/google',
   passport.authenticate('google', {
     scope: ['profile']
@@ -91,7 +94,8 @@ router.get('/google',
 );
 
 router.get('/google/redirect', passport.authenticate('google'), (req, res, next) => {
-  res.send('reached')
-})
+  console.log('inin')
+  res.redirect('/');
+});
 
 module.exports = router;

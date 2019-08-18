@@ -5,6 +5,8 @@ const { Schema } = mongoose;
 const testSchema = new Schema({
     id: String,
     pwd: String,
+    displayName: String,
+    refreshToken: String,
 })
 
 module.exports = mongoose.model('test', testSchema);

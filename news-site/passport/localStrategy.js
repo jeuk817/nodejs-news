@@ -10,6 +10,7 @@ module.exports = passport => {
         usernameField: 'inputID',
         passwordField: 'inputPwd',
     }, async (inputID, inputPwd, done) => {
+        console.log('localstratgy')
         try {
             const exUser = await UserCollection.findOne({ id: inputID });
             if (exUser) {

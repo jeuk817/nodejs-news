@@ -43,6 +43,7 @@ router.post('/identification', isNotLoggedIn, async (req, res, next) => {
 // passport.use에서 로그인 성공/실패에 따라 다른 매개변수가 passport.authenticate의 두번째 콜백함수에 넘어옵니다.
 // 로그인 성공시 req.login을 통해 passport를 쿠키에 저장하고, jwt.sign을 통해 토큰을 만들어 res.cookie를 통해저장한다.
 // 실패시 로그인페이지에 redirect 성공시 홈으로 redirect
+/*
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
     console.log('passport.authenticate')
@@ -74,6 +75,45 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     });
   })(req, res, next);
 });
+*/
+
+router.post('/login', isNotLoggedIn, async (req, res, next) => {
+  console.log('로컬로그인')
+  const { inputID, inputPwd } = req.body;
+  try {
+    const exUser = await UserCollection.findOne({ id: inputID });
+    if (exUser) {
+      const result = inputPwd === exUser.pwd;
+      if (result) {
+        // 로그인 성공시 토큰 생성
+        console.log('로컬로그인 성공')
+        const token = jwt.sign({
+          id: exUser.id,
+          _id: exUser._id,
+          displayName: exUser.displayName,
+        }, process.env.JWT_SECRET, {
+            expiresIn: '10m',
+            issuer: 'circus'
+          });
+        res.cookie('token', token, {
+          httpOnly: true,
+          maxAge: 15 * 60000,
+        })
+
+        return res.redirect('/')
+      } else {
+        console.log('로컬로그인 비밀번호 불일치')
+        // 비밀번호 불일치
+      }
+    } else {
+      console.log('로컬로그인 없는 아이디')
+      // 없는 아이디
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+})
 
 // 로그아웃버튼 클릭시 실행
 // req.logout은 req.user를 없애고, req.session.destroy는 req.session을 없앱니다. 그리고 홈페이지로 redirect합니다.

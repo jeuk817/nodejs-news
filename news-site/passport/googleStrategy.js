@@ -21,7 +21,7 @@ module.exports = passport => {
                 console.log('있는 아이디');
                 done(null, exUser);
             } else {
-                let newUser = new UserCollection({ id: profile.id, pwd: profile.displayName });
+                let newUser = new UserCollection({ id: profile.id, displayName: profile.displayName, picture: profile.photos[0].value, provider: profile.provider });
                 newUser.save((err, account) => {
                     if (err) return console.error(err);
                 })

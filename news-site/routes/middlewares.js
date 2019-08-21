@@ -20,10 +20,11 @@ exports.isLoggedIn = async (req, res, next) => {
             return next();
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
-                return res.status(419).json({
-                    code: 419,
-                    message: '토큰이 만료되었습니다.'
-                });
+                return res.render('homepage');
+                // return res.status(419).json({
+                //     code: 419,
+                //     message: '토큰이 만료되었습니다.'
+                // });
             }
             return res.status(401).json({
                 code: 401,

@@ -1,23 +1,25 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const session = require('express-session');
-const flash = require('connect-flash');
-const passport = require('passport');
-const passportConfig = require('./passport/index');
-const connect = require('./schemas/index');
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user');
-const textRouter = require('./routes/text');
+const createError = require('http-errors'),
+  express = require('express'),
+  path = require('path'),
+  cookieParser = require('cookie-parser'),
+  logger = require('morgan'),
+  session = require('express-session'),
+  flash = require('connect-flash'),
+  passport = require('passport'),
+  app = express();
 
-const app = express();
-connect();
+const passportConfig = require('./passport/index'),
+  connect = require('./schemas/index');
 passportConfig(passport);
+connect();
+
+const indexRouter = require('./routes/index'),
+  authRouter = require('./routes/auth'),
+  userRouter = require('./routes/user'),
+  textRouter = require('./routes/text');
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

@@ -34,7 +34,7 @@ exports.isLoggedIn = async (req, res, next) => {
     }
 };
 
-// 로그아웃상태가 아니면 다음 미들웨어로 넘깁니다.
+// 로그아웃상태면 다음 미들웨어로 넘깁니다.
 // 1. session 로그아웃상태인지 확인 2. 토큰로그아웃상태인지 확인 3. session,token 둘다 로그아웃 상태라면 next()를 하여 다음미들웨어로 넘깁니다.
 exports.isNotLoggedIn = async (req, res, next) => {
     if (!req.isAuthenticated()) {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const UserCollection = require('../schemas/user');
@@ -12,10 +13,11 @@ router.get('/', function (req, res, next) {
 
 // 회원가입버튼 클릭시 실행
 // 입력값 id,pwd를 받아와 DB에 저장합니다. 그후 로그인페이지로 redirect
-router.post('/signUp', isNotLoggedIn, (req, res, next) => {
-  const { id, pwd } = req.body;
-  let newUser = new UserCollection({ id, pwd });
-  newUser.save((err, account) => {
+router.post('/signUp', isNotLoggedIn, async (req, res, next) => {
+  const { id, pwd, displayName } = req.body;
+  const hash = await bcrypt.hash(pwd, 12);
+  let newUser = new UserCollection({ id, displayName, pwd: hash });
+  await newUser.save((err, account) => {
     if (err) return console.error(err);
   })
   res.redirect('/loginPage');
@@ -24,13 +26,19 @@ router.post('/signUp', isNotLoggedIn, (req, res, next) => {
 // ID중복확인버튼 클릭시 실행
 // 입력값 id를 받아와 DB를 조회해 이미 있는 계정인지 확인하여 있으면 no 없으면 yes를 send합니다.
 router.post('/identification', isNotLoggedIn, async (req, res, next) => {
-  const { id } = req.body;
+  const { id, displayName } = req.body;
   try {
-    const users = await UserCollection.find({ id });
-    if (users.length) {
-      res.send('no');
+    const exId = await UserCollection.findOne({ id });
+    const exNickname = await UserCollection.findOne({ displayName });
+    console.log('exId', exId);
+    console.log('exNickname', exNickname);
+    if (exId) {
+      return res.send(`${id}은(는) 이미 사용중인 ID입니다.`);
     } else {
-      res.send('yes')
+      if (exNickname) {
+        return res.send(`${displayName}은(는) 이미 사용중인 닉네임 입니다.`);
+      }
+      return res.send('Available');
     }
   } catch (err) {
     console.log(err);
@@ -45,7 +53,8 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await UserCollection.findOne({ id: inputID });
     if (exUser) {
-      const result = inputPwd === exUser.pwd;
+      // const result = inputPwd === exUser.pwd;
+      const result = await bcrypt.compare(inputPwd, exUser.pwd);
       if (result) {
         // 로그인 성공시 토큰 생성
         const token = jwt.sign({

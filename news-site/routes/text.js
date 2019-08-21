@@ -1,21 +1,4 @@
 const express = require('express');
-const path = require('path');
-const multer = require('multer');
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination(req, file, cb) {
-//             cb(null, 'imgFile/');
-//         },
-//         filename(req, file, cb) {
-//             const ext = path.extname(file.originalname);
-//             cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
-//         },
-//     }),
-//     limits: {
-//         fieldSize: 5 * 1024 * 1024
-//     },
-// })
-// const upload = multer({})
 
 const router = express.Router();
 
@@ -29,20 +12,9 @@ router.get('/', isLoggedIn, (req, res, next) => {
     res.render('text', { user: req.user });
 });
 
-// router.post('/write', isLoggedIn, upload.single('avatar'), (req, res, next) => {
-//     // res.render('text', { user: req.user });
-//     console.log('req.file.buffer', req.file.buffer)
-//     console.log(req.file, 'file')
-
-// });
-
-// router.post('/write', isLoggedIn, upload.single('avatar'), (req, res, next) => {
-//     // res.render('text', { user: req.user });
-//     console.log('req.file.buffer', req.file.buffer)
-//     console.log(req.file, 'file')
-// });
-
+// 글쓰기 저장 시 실행합니다.
 router.post('/write', isLoggedIn, (req, res, next) => {
+    // 첨부파일을 s3 에 저장하는 함수입니다.
     singleUpload(req, res, function (err) {
         if (err) {
             return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] })

@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 });
 
 // 회원가입버튼 클릭시 실행
-// 입력값 id,pwd를 받아와 DB에 저장합니다. 그후 로그인페이지로 redirect
+// 입력값 id, displayName, pwd를 받아와 DB에 저장합니다. 그후 로그인페이지로 redirect
 router.post('/signUp', isNotLoggedIn, async (req, res, next) => {
   const { id, pwd, displayName } = req.body;
   const hash = await bcrypt.hash(pwd, 12);
@@ -23,15 +23,13 @@ router.post('/signUp', isNotLoggedIn, async (req, res, next) => {
   res.redirect('/loginPage');
 })
 
-// ID중복확인버튼 클릭시 실행
-// 입력값 id를 받아와 DB를 조회해 이미 있는 계정인지 확인하여 있으면 no 없으면 yes를 send합니다.
+// 중복체크버튼 클릭시 실행
+// 입력값 id와 displayName: nickname을 받아와 DB를 조회해 중복인지 확인하고 상황에 맞게 메시지를 send합니다.
 router.post('/identification', isNotLoggedIn, async (req, res, next) => {
   const { id, displayName } = req.body;
   try {
     const exId = await UserCollection.findOne({ id });
     const exNickname = await UserCollection.findOne({ displayName });
-    console.log('exId', exId);
-    console.log('exNickname', exNickname);
     if (exId) {
       return res.send(`${id}은(는) 이미 사용중인 ID입니다.`);
     } else {
@@ -53,7 +51,6 @@ router.post('/login', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await UserCollection.findOne({ id: inputID });
     if (exUser) {
-      // const result = inputPwd === exUser.pwd;
       const result = await bcrypt.compare(inputPwd, exUser.pwd);
       if (result) {
         // 로그인 성공시 토큰 생성

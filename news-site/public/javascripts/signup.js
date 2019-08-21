@@ -41,6 +41,7 @@ inputID.addEventListener('keyup', (event) => {
     noteID.innerHTML = '올바른 형식의 ID입니다. 중복체크를 해주세요.'
 })
 
+// 닉네임 입력 시 최대 10글자까지 허용하도록 구현
 inputNickname.addEventListener('keyup', (event) => {
     let nicknameToCheck = inputNickname.value;
     inputNickname.dataset.possible = "no";
@@ -51,7 +52,7 @@ inputNickname.addEventListener('keyup', (event) => {
     noteID.innerHTML = '올바른 형식의 닉네임입니다. 중복체크를 해주세요.'
 })
 
-// ID중복확인버튼 클릭시 서버와 통신하여 중복체크까지하여 표시하는 이벤트
+// 중복체크 클릭시 서버와 통신하여 ID와 닉네임을 중복체크하여 표시하는 이벤트
 identification.addEventListener('click', async (event) => {
     if (inputID.dataset.possible !== "yet") return noteID.innerHTML = '올바른 형식의 ID를 입력해 주세요.'
     if (inputNickname.dataset.possible !== "yet") return noteID.innerHTML = '올바른 형식의 닉네임를 입력해 주세요.'

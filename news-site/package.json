@@ -6,15 +6,11 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-<<<<<<< HEAD
     "aws-sdk": "^2.514.0",
-=======
->>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)
     "bcrypt": "^3.0.6",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-<<<<<<< HEAD
     "dotenv": "^8.0.0",
     "express": "~4.16.1",
     "express-session": "^1.16.2",
@@ -27,14 +23,6 @@
     "multer-s3": "^2.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
-=======
-    "express": "~4.16.1",
-    "express-session": "^1.16.2",
-    "http-errors": "~1.6.3",
-    "mongoose": "^5.6.7",
-    "morgan": "~1.9.1",
-    "passport": "^0.4.0",
->>>>>>> Circus 뉴스사이트 로컬로그인 구현 (#27)
     "passport-local": "^1.0.0",
     "pug": "2.0.0-beta11"
   }

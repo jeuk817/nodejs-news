@@ -1,4 +1,3 @@
-const local = require('./localStrategy');
 const google = require('./googleStrategy');
 const UserCollection = require('../schemas/user');
 
@@ -22,6 +21,5 @@ module.exports = (passport) => {
     });
 
     // 이 메소드는 클라이언트로부터 로그인입력값을 받아와 로그인 전략을 구현합니다.
-    local(passport);
     google(passport);
 }

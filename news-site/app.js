@@ -28,11 +28,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('secret code'));
+app.use(cookieParser(process.env.SECRET));
 app.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: 'secret code',
+  secret: process.env.SECRET,
   cookie: {
     httpOnly: true,
     secure: false,

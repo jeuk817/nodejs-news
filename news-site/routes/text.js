@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const UserCollection = require('../schemas/user');
+const articleCollection = require('../schemas/articles');
 const upload = require('../services/file-upload');
 const singleUpload = upload.single('image')
 
@@ -20,6 +20,7 @@ router.post('/write', isLoggedIn, (req, res, next) => {
             return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] })
         }
 
+        console.log('user', req.user)
         return res.json({ 'imgUrl': req.file.location });
     })
 });

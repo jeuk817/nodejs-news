@@ -3,11 +3,9 @@ const { isLoggedIn, isNotLoggedIn, loginConfig } = require('./middlewares');
 
 var router = express.Router();
 
-// 홈페이지
-// 로그인상태가 아니면 homepage.pug를 render하고, 로그인상태면 loginedhome.pug를 출력합니다.
+// 홈페이지: 로그인상태라면 loginConfig혹은 passport에서 req.user에 유저정보가 담겨서 옵니다.
 router.get('/', loginConfig, (req, res, next) => {
   console.log(req.user)
-  // console.log(req.userInfo)
   res.render('homePage', { user: req.user });
 });
 

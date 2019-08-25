@@ -12,7 +12,9 @@ exports.isLoggedIn = async (req, res, next) => {
         try {
             const token = req.cookies.token;
             if (!token) {
-                return res.render('homePage', { user: req.user });
+                req.flash('Inaccessible', '접근권한이 없습니다.');
+                return res.redirect('/loginPage')
+                // return res.render('homePage', { user: req.user });
             }
             console.log('token login success')
             const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
@@ -20,16 +22,20 @@ exports.isLoggedIn = async (req, res, next) => {
             return next();
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
-                return res.render('homePage');
+                req.flash('Inaccessible', '로그인 시간이 초과되었습니다.');
+                return res.redirect('/loginPage')
+                // return res.render('homePage');
                 // return res.status(419).json({
                 //     code: 419,
                 //     message: '토큰이 만료되었습니다.'
                 // });
             }
-            return res.status(401).json({
-                code: 401,
-                message: '유효하지 않은 토큰입니다.'
-            });
+            req.flash('Inaccessible', '유효하지 않은 로그인입니다.');
+            return res.redirect('/loginPage');
+            // return res.status(401).json({
+            //     code: 401,
+            //     message: '유효하지 않은 토큰입니다.'
+            // });
         }
     }
 };
@@ -48,19 +54,45 @@ exports.isNotLoggedIn = async (req, res, next) => {
             // token 로그인 상태일 때
             const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
             req.user = decodedToken;
-            return res.render('homePage', { user: req.user });
+            req.flash('Inaccessible', '이미 로그인하셨습니다.');
+            return res.redirect('/');
+            // return res.render('homePage', { user: req.user });
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
                 // 토큰 유효기간이 지난 상태일 때
                 return next();
             }
-            return res.status(401).json({
-                code: 401,
-                message: '유효하지 않은 토큰입니다.'
-            });
+            req.flash('Inaccessible', '유효하지 않은 토큰입니다.');
+            return res.redirect('/');
+            // return res.status(401).json({
+            //     code: 401,
+            //     message: '유효하지 않은 토큰입니다.'
+            // });
         }
     } else {
         // session 로그인 상태일 때
-        return res.render('homePage', { user: req.user });
+        req.flash('Inaccessible', '이미 로그인하셨습니다.');
+        return res.redirect('/');
+        // return res.render('homePage', { user: req.user });
+    }
+}
+
+exports.loginConfig = async (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return next();
+        }
+        const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decodedToken;
+        return next();
+    } catch (err) {
+        if (err.name === 'TokenExpiredError') {
+            return next();
+        }
+        return res.status(401).json({
+            code: 401,
+            message: '유효하지 않은 토큰입니다.'
+        });
     }
 }

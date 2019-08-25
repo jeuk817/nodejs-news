@@ -20,10 +20,11 @@ router.post('/write', isLoggedIn, (req, res, next) => {
             return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] })
         }
 
-        const { title, content } = req.body;
+        const { title, content, thema } = req.body;
         const newArticle = new articleCollection({
             reporterId: req.user._id,
             reporterName: req.user.displayName,
+            thema,
             title,
             pictureUrl: req.file.location,
             content,

@@ -3,13 +3,17 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 // 기사 스키마 구성요소
-// 기자_id, 기자이름, 제목, 사진, 내용, 댓글, 감정표현, 조회수, 작성일, 수정일
+// 기자_id, 기자이름, 테마, 제목, 사진, 내용, 댓글, 감정표현, 조회수, 작성일, 수정일
 const article = new Schema({
     reporterId: {
         type: String,
         required: true,
     },
     reporterName: {
+        type: String,
+        required: true,
+    },
+    thema: {
         type: String,
         required: true,
     },

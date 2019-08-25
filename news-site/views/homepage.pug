@@ -3,8 +3,13 @@ extends homePageRoof
 block content
     article
         div(id="mainArticle")
-            a(href="http://localhost:3000/user" id="mainArticleLink")
+            - const _id = mainArticle._id;
+            a(href=`http://localhost:3000/article/${_id}` id="mainArticleLink")
                 div(id="mainPicture")
                     img(src="https://news-site-circus.s3.ap-northeast-2.amazonaws.com/bavaria-4289779_1920.jpg_1566650974472")
-                span(id="mainArticleTitle") 메인기사 제목
-                span(id="mainArticleContent") 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 메인기사 내용 
+                if mainArticle.title.length > 25
+                    span(id="mainArticleTitle") #{mainArticle.title.substring(0,25)}...
+                else
+                    span(id="mainArticleTitle") #{mainArticle.title}
+                span(id="mainArticleContent") #{mainArticle.content.substring(0,120)}...
+        div(id="hotNews")

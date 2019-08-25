@@ -7,7 +7,17 @@ class NewsEditor {
             console.log(articles);
             return articles;
         } catch (err) {
-            console.log(err);
+            console.error(err);
+            return err;
+        }
+    }
+
+    async getMainArticle() {
+        try {
+            const mainArticle = await articleCollection.findById("5d62b27da04f7295282444a9")
+            return mainArticle;
+        } catch (err) {
+            console.error(err);
             return err;
         }
     }

@@ -12,7 +12,7 @@ exports.isLoggedIn = async (req, res, next) => {
         try {
             const token = req.cookies.token;
             if (!token) {
-                return res.render('homepage');
+                return res.render('homePage', { user: req.user });
             }
             console.log('token login success')
             const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
@@ -20,7 +20,7 @@ exports.isLoggedIn = async (req, res, next) => {
             return next();
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
-                return res.render('homepage');
+                return res.render('homePage');
                 // return res.status(419).json({
                 //     code: 419,
                 //     message: '토큰이 만료되었습니다.'
@@ -48,7 +48,7 @@ exports.isNotLoggedIn = async (req, res, next) => {
             // token 로그인 상태일 때
             const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
             req.user = decodedToken;
-            return res.render('loginedhome', { user: req.user });
+            return res.render('homePage', { user: req.user });
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
                 // 토큰 유효기간이 지난 상태일 때
@@ -61,6 +61,6 @@ exports.isNotLoggedIn = async (req, res, next) => {
         }
     } else {
         // session 로그인 상태일 때
-        return res.render('loginedhome', { user: req.user });
+        return res.render('homePage', { user: req.user });
     }
 }

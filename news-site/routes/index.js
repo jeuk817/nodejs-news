@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/', isLoggedIn, (req, res, next) => {
   console.log(req.user)
   // console.log(req.userInfo)
-  res.render('loginedhome', { user: req.user });
+  res.render('homePage', { user: req.user });
 });
 
 // 로그인페이지

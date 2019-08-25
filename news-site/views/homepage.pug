@@ -1,12 +1,7 @@
-doctype html
-html
-  head
-    title= 'Circus News'
-    link(rel='stylesheet', href='/stylesheets/homepage.css')
-  body
-    header
-        div(id='areaRoof')
-            a(href='http://localhost:3000/loginPage' role='button')
-                div(id='goLogin') 로그인
-        div(id='areaLogo')    
-            h1 Circus News
+extends homePageRoof
+
+block content
+    article
+        a(href="http://localhost:3000/user")
+            img(src="https://news-site-circus.s3.ap-northeast-2.amazonaws.com/bavaria-4289779_1920.jpg_1566650974472")
+            span asdf

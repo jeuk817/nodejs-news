@@ -1,11 +1,13 @@
 var express = require('express');
 const { isLoggedIn, isNotLoggedIn, loginConfig } = require('./middlewares');
+const NewsEditor = require('../model/newsEditor');
+const newsEditor = new NewsEditor();
 
 var router = express.Router();
 
 // 홈페이지: 로그인상태라면 loginConfig혹은 passport에서 req.user에 유저정보가 담겨서 옵니다.
 router.get('/', loginConfig, (req, res, next) => {
-  console.log(req.user)
+  const articles = newsEditor.getArticles('해외');
   res.render('homePage', { user: req.user });
 });
 

@@ -1,0 +1,19 @@
+extends homePageRoof
+
+block content
+    article
+        div(id="article")
+            div(id="articleHead")
+                div(id="articleTitle") #{article.title}
+                br
+                div(id="date") 기사입력일 #{article.createdAt.getFullYear()}년 #{article.createdAt.getMonth() + 1}월 #{article.createdAt.getDate()}일<br>최종수정일 #{article.updatedAt.getFullYear()}년 #{article.updatedAt.getMonth() + 1}월 #{article.updatedAt.getDate()}일
+            div(id="content")
+                div(id="picture")
+                    img(src=`${article.pictureUrl}`)
+                - const splitedContent = article.content.split('\r\n');
+                each sentence in splitedContent
+                    if sentence !== ''
+                        span= sentence
+                    br
+                br
+                div [#{article.reporterName} 기자]

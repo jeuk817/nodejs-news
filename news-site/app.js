@@ -18,7 +18,8 @@ connect();
 const indexRouter = require('./routes/index'),
   authRouter = require('./routes/auth'),
   userRouter = require('./routes/user'),
-  textRouter = require('./routes/text');
+  textRouter = require('./routes/text'),
+  articleRouter = require('./routes/article');
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/text', textRouter);
+app.use('/article', articleRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

@@ -1,6 +1,7 @@
 const articleCollection = require('../schemas/articles');
 
 class NewsEditor {
+
     async getArticles(thema) {
         try {
             const articles = await articleCollection.find({ thema });
@@ -21,6 +22,19 @@ class NewsEditor {
             return err;
         }
     }
+
+    async getArticleById(id) {
+        try {
+            const mainArticle = await articleCollection.findById(id)
+            return mainArticle;
+        } catch (err) {
+            console.error(err);
+            return err;
+        }
+    }
+
 }
+
+
 
 module.exports = NewsEditor;

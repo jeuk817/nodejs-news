@@ -3,10 +3,9 @@ extends homePageRoof
 block content
     article
         div(id="mainArticle")
-            - const _id = mainArticle._id;
-            a(href=`http://localhost:3000/article/${_id}` id="mainArticleLink")
+            a(href=`http://localhost:3000/article/${mainArticle._id}` id="mainArticleLink")
                 div(id="mainPicture")
-                    img(src="https://news-site-circus.s3.ap-northeast-2.amazonaws.com/bavaria-4289779_1920.jpg_1566650974472")
+                    img(src=`${mainArticle.pictureUrl}`)
                 if mainArticle.title.length > 25
                     span(id="mainArticleTitle") #{mainArticle.title.substring(0,25)}...
                 else

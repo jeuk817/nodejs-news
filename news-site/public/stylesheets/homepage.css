@@ -106,3 +106,41 @@ img{
 #date{
     text-align: right;
 }
+#emotions{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+#goodBtn,
+#badBtn{
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 100px;
+    height: 50px;
+    border-top-right-radius: 27px;
+    border-bottom-right-radius: 27px;
+    border-top-left-radius: 27px;
+    border-bottom-left-radius: 27px;
+}
+
+#commentField{
+    display: flex;
+    justify-content: center;
+}
+
+#inputComment{
+    width: 80%;
+    height: 50px;
+}
+
+#commentSub{
+    width: 10%;
+    height: 50px;
+}
+
+#comments{
+    margin: 50px;
+    display: flex;
+    justify-content: flex-start;
+}

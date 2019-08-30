@@ -10,14 +10,13 @@ for (let i = 0; i < emotions.length; i++) {
         const _id = document.URL.split('/').pop();
         const response = await fetch('/article/emotion', {
             method: 'POST',
-            body: JSON.stringify({ emotion, _id }),
+            body: JSON.stringify({ emotion, _id, state: event.target.classList.length }),
             headers: { "Content-Type": "application/json" }
         })
-
+        const updatedNum = await response.text();
         if (response.ok) {
-            let num = Number(document.getElementById(`${emotion}Num`).textContent);
-            num += 1;
-            document.getElementById(`${emotion}Num`).textContent = num;
+            document.getElementById(`${emotion}Num`).textContent = updatedNum;
+            event.target.classList.toggle('done')
         }
     })
 }

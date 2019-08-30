@@ -33,9 +33,15 @@ class NewsEditor {
         }
     }
 
-    async updateEmotion(emotion, _id) {
-        const article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: 1 } }, { new: true }).exec();
-        console.log('emotion result', article);
+    async updateEmotion(emotion, _id, state) {
+        let article;
+        if (state === 1) {
+            article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: 1 } }, { new: true }).exec();
+            return article.emotions[emotion];
+        }
+
+        article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: -1 } }, { new: true }).exec();
+        return article.emotions[emotion];
     }
 }
 

@@ -11,4 +11,10 @@ router.get('/:id', loginConfig, async (req, res, next) => {
     res.render('article', { user: req.user, article });
 });
 
+router.post('/emotion', loginConfig, async (req, res, next) => {
+    const { emotion, _id } = req.body;
+    await newsEditor.updateEmotion(emotion, _id);
+    res.send();
+})
+
 module.exports = router;

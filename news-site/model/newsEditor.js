@@ -15,7 +15,7 @@ class NewsEditor {
 
     async getMainArticle() {
         try {
-            const mainArticle = await articleCollection.findById("5d62b27da04f7295282444a9")
+            const mainArticle = await articleCollection.findById("5d68a77dc48d255ab881c4d5")
             return mainArticle;
         } catch (err) {
             console.error(err);
@@ -33,6 +33,10 @@ class NewsEditor {
         }
     }
 
+    async updateEmotion(emotion, _id) {
+        const article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: 1 } }, { new: true }).exec();
+        console.log('emotion result', article);
+    }
 }
 
 

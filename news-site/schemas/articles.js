@@ -31,23 +31,28 @@ const article = new Schema({
         good: {
             type: Number,
             default: 0,
+            required: true,
         },
         sad: {
             type: Number,
             default: 0,
+            required: true,
         },
         angry: {
             type: Number,
             default: 0,
+            required: true,
         },
         want: {
             type: Number,
             default: 0,
+            required: true,
         },
     },
     hits: {
         type: Number,
         default: 0,
+        required: true,
     },
 }, {
         timestamps: {

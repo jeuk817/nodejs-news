@@ -45,6 +45,4 @@ class NewsEditor {
     }
 }
 
-
-
 module.exports = NewsEditor;

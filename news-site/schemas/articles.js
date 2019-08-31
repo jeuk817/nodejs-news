@@ -26,38 +26,24 @@ const article = new Schema({
         type: String,
         required: true,
     },
-    comments: [],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'comments' }],
     emotions: {
-        good: {
-            type: Number,
-            default: 0,
-            required: true,
-        },
-        sad: {
-            type: Number,
-            default: 0,
-            required: true,
-        },
-        angry: {
-            type: Number,
-            default: 0,
-            required: true,
-        },
-        want: {
-            type: Number,
-            default: 0,
-            required: true,
-        },
+        good: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
+        sad: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
+        angry: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
+        want: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
     },
     hits: {
         type: Number,
         default: 0,
-        required: true,
     },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
+    }
 }, {
         timestamps: {
             createdAt: 'createdAt',
-            updatedAt: 'updatedAt',
         }
     })
 

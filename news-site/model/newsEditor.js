@@ -1,4 +1,5 @@
 const articleCollection = require('../schemas/articles');
+const userCollection = require('../schemas/user');
 
 class NewsEditor {
 
@@ -15,7 +16,7 @@ class NewsEditor {
 
     async getMainArticle() {
         try {
-            const mainArticle = await articleCollection.findById("5d68a77dc48d255ab881c4d5")
+            const mainArticle = await articleCollection.findById("5d68a77dc48d255ab881c4d5");
             return mainArticle;
         } catch (err) {
             console.error(err);
@@ -25,7 +26,7 @@ class NewsEditor {
 
     async getArticleById(id) {
         try {
-            const mainArticle = await articleCollection.findById(id)
+            const mainArticle = await articleCollection.findById(id);
             return mainArticle;
         } catch (err) {
             console.error(err);
@@ -35,14 +36,19 @@ class NewsEditor {
 
     async updateEmotion(emotion, _id, state) {
         let article;
-        if (state === 1) {
-            article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: 1 } }, { new: true }).exec();
-            return article.emotions[emotion];
-        }
+        try {
+            if (state === 1) {
+                article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: 1 } }, { new: true }).exec();
+                return article.emotions[emotion];
+            }
 
-        article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: -1 } }, { new: true }).exec();
-        return article.emotions[emotion];
+            article = await articleCollection.findByIdAndUpdate(_id, { $inc: { [`emotions.${emotion}`]: -1 } }, { new: true }).exec();
+            return article.emotions[emotion];
+        } catch (err) {
+            return err;
+        }
     }
 }
+
 
 module.exports = NewsEditor;
